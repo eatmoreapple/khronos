@@ -68,12 +68,12 @@ func (srv *Server) Serve(listener net.Listener) error {
 func (srv *Server) serveConn(ctx context.Context, conn net.Conn) {
 	c := &connContext{conn: conn, ctx: ctx}
 	writer := &responseWriter{conn}
+	defer func() { _ = conn.Close() }()
 	for {
 		// FIXME
 		if err := c.serve(writer); err != nil {
 			if errors.Is(err, ErrQuit) {
 				srv.logf("khronos: conn closed: %v", err)
-				_ = conn.Close()
 				return
 			}
 			if err = writer.WriteError(err); err != nil {
