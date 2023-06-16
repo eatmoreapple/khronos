@@ -1,6 +1,6 @@
 ## khronos
 
-golang 优先级队列，兼容 redis 协议但不依赖 redis
+golang 优先级队列，兼容 redis resp 协议
 
 ### Example
 
